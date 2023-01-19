@@ -1,15 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
-import Navbar from './components/Navbar';
-import ItemListContainer from './components/ItemListContainer';
+// import './App.css';
+import Navbar from './components/NavBar/Navbar';
+import ItemListContainer from './pages/ItemListContainer/ItemListContainer';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import ItemDetailContainer from './pages/ItemDetailContainer/ItemDetailContainer';
+import Footer from './components/Footer/Footer';
 
 function App() {
-  const welcome = 'Tienda smartwatch';
+
+  const welcome = 'Diamond';
+
   return (
-    <div className="App">
+    <BrowserRouter>
       <Navbar name={welcome}/>
-      <ItemListContainer/>
-    </div>
+      <Routes>
+        <Route path='/' element={<ItemListContainer greeting='Bienvenido'/>}/>
+        <Route path='item/:id' element={<ItemDetailContainer/>}/>
+        <Route path='/category/:category' element={<ItemListContainer/>}/>
+        <Route path=''/>
+      </Routes>
+      <Footer/>
+    </BrowserRouter>
   );
 }
 

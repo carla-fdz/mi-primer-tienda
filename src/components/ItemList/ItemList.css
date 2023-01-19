@@ -1,0 +1,12 @@
+.link{
+    text-decoration: none;
+    color: black;
+}
+
+.itemList{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    list-style: none;
+}
