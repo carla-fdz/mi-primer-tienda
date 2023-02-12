@@ -1,4 +1,4 @@
-import './App.css';
+// import './App.css';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import ItemListContainer from './pages/ItemListContainer/ItemListContainer';
 import ItemDetailContainer from './pages/ItemDetailContainer/ItemDetailContainer';

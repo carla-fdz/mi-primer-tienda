@@ -15,5 +15,3 @@ const Item = ({producto}) => {
 };
 
 export default Item; 
-
-//siempre poner el alt en la img para que no salte error
