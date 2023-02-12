@@ -11,3 +11,8 @@
     justify-content: space-around;
     margin-bottom: 5px;
 }
+
+.controllers--symbol{
+    padding: 2px 5px;
+    font-size: 16px;
+}

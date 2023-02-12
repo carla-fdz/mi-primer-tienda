@@ -1,16 +1,15 @@
-import ItemCount from '../ItemCount/ItemCount';
 import './Item.css';
 
 const Item = ({producto}) => {
   return (
     <li>
         <div className='item'>
-          <img alt={producto.title} src={producto.image} width='200'/>
-          <h2>{producto.title}</h2>
-          <h3>{producto.category}</h3>
-          <p>{producto.description}</p>
+          <img alt={producto.title} src={`/images/products/${producto.imageId}`} width='100%'/>
+          <h2 className='item--title'>{producto.title}</h2>
+          <p className='item--category'>{producto.categoryId}</p>
+          <p className='item--description'>{producto.description}</p>
+          <p className='item--price'>{`$${producto.price}`}</p>
         </div>
-        <ItemCount/>
     </li>
   )
 };

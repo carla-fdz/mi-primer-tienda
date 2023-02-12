@@ -1,76 +1,52 @@
 import './ItemListContainer.css'
-import ItemCount from "../../components/ItemCount/ItemCount";
-import { useEffect, useState } from 'react';
 import ItemList from '../../components/ItemList/ItemList';
+import Loading from '../../components/Loading/Loading';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { getFirestore, getDocs, collection, query, where } from 'firebase/firestore';
 
-const ItemListContainer = ({greeting}) => {
+const ItemListContainer = () => {
 
     const [products, setProducts] = useState([])
-    const [filteredProducts, setFilteredProducts] = useState([])
+    const [loading, setLoading] = useState(true);
     const { category } = useParams();
 
-    // const categorias = () => {
-    //     alert('En proceso');
-    // };
 
-    // Simular petición a una API
-    // const getProducts  = new Promise ((resolve, reject) => {
-    //     setTimeout(() => {
-    //         resolve([
-    //             {name:'producto 1', id:1},
-    //             {name:'producto 2', id:2},
-    //             {name:'producto 3', id:3},
-    //             {name:'producto 4', id:4},
-    //             {name:'producto 5', id:5},
-    //             {name:'producto 6', id:6},
-    //             {name:'producto 7', id:7},
-    //         ]);
-    //     }, 2000);
-    // });
+    const getProducts = () => {
+        const dataBase = getFirestore();
+        const itemsCollection = collection(dataBase, 'items');
 
-
-    const getProducts = fetch(`https://fakestoreapi.com/products`, {
-        method: 'GET',
-        headers: {
-            'content-type': 'json',
-        }
-    })
-    ;
-
-    useEffect(() => {
-        getProducts
-        .then((response) => {
-            return response.json();
-        })
-        .then((response) => {
-            console.log(response);
-            setProducts(response);
-        })
-        .catch(error => console.log(error))
-    }, []);
-
-    useEffect(() => {
         if(category){
-        const removeCharacters = category.includes('%20') ? category.replace('%20', '') : category;
-        const filterProducts = products.filter((product) => product.category === removeCharacters);
-        setFilteredProducts(filterProducts);
+            const newConfiguration = query(itemsCollection, where('categoryId', '==', category));
+            getDocs(newConfiguration)
+            .then((response) => {
+                const data = response.docs.map((doc) => {
+                    return { id: doc.id, ...doc.data() }
+                })
+                setLoading(false);
+                setProducts(data);
+            })
+            .catch(error => console.log(error));
+        } else {
+            getDocs(itemsCollection)
+            .then((response) => {
+                const data = response.docs.map((doc) => {
+                    return { id: doc.id, ...doc.data() };
+                })
+                setLoading(false);
+                setProducts(data);
+            })
+            .catch((error) => console.log(error));
         }
+};  
+
+    useEffect(() => {
+        getProducts();
     }, [category])
 
-
-    //Declaro un state con useState para poder utilizar response fuera de ese scope
     return (
-        <div>
-            {greeting}
-            {/* <button onClick={categorias}>Ver productos</button> */}
-            <ItemCount/>
-            <ItemList productos={category ? filteredProducts : products}/>
-            {/* <ul>
-                {products.map((producto) => (
-                    <li key={producto.id}>{producto.name}</li>
-                ))}
-            </ul> */}
+        <div className='itemListContainer'>
+            {loading ? <Loading/> : <ItemList productos={products}/>}
         </div>
     )
 };

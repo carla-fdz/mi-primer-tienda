@@ -1,15 +1,39 @@
-
-
 .item{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin: 1rem auto;
-    padding: 1rem;
+    text-align: center;
     border: 1px solid #ccc;
-    border-radius: 5px;
     box-shadow: 0 2px 2px #ccc;
     transition: all 0.3s ease-in-out;
     width: 300px;
+    background-color: white;
+    margin: 40px 30px;
+}
+
+.item--title{
+    color: hsl(212, 21%, 14%);
+    padding: 5px 0;
+    font-weight: 700;
+    font-size: 20px;
+}
+
+.item--category{
+    text-transform: uppercase;
+    letter-spacing: 4px;
+    font-size: 13px;
+}
+
+.item--description{
+    color: hsl(228, 12%, 48%);
+    padding: 15px 30px;
+    border-radius: 0 0 10px 10px;
+}
+
+.item--price{
+    color: hsl(158, 36%, 37%);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 10px;
 }
